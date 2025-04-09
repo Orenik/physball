@@ -1,0 +1,33 @@
+# Git Staging Cheatsheet
+
+# Stage a specific file
+git add filename.txt
+
+# Stage all changes (excluding deletions)
+git add .
+
+# Stage only modified/deleted files (no new files)
+git add -u
+
+# Stage all changes
+git add -A
+
+# Check staged vs unstaged changes
+git status
+
+# Git Push to GitHub Cheatsheet
+
+# Set remote (if not already set)
+git remote add origin https://github.com/your-username/your-repo.git
+
+# Push current branch to GitHub
+git push origin branch_name
+
+# Push and set upstream (first push)
+git push -u origin branch_name
+
+# Example: push main branch
+git push -u origin main
+
+# Git Credentials (User / Password for github saved to memory)
+git config --global credential.helper cache
