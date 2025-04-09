@@ -7,11 +7,11 @@ local BALL_RADIUS = 20
 
 
 local N_RINGS = 50
-local RING_SPACING = 8
-local RING_THICKNESS = 10  
+local RING_SPACING = 5
+local RING_THICKNESS = 2
 local RING_RADIUS_START = 40
 local GAP_ARC = math.rad(45) -- 45° arc missing
-local ROTATION_SPEED = math.rad(30) -- radians/sec
+local ROTATION_SPEED = math.rad(1) -- radians/sec
 
 local BOUNCE_RANDOMNESS = 0.05 -- 0 = realistic, higher = more chaotic
 
@@ -29,6 +29,9 @@ local ball = {
 }
 
 function love.load()
+
+	love.graphics.setLineWidth(RING_THICKNESS)
+
     for i = 1, N_RINGS do
         local radius = RING_RADIUS_START + (i - 1) * RING_SPACING
         -- Random offset for starting rotation
@@ -37,7 +40,7 @@ function love.load()
         table.insert(rings, {
             radius = radius,
             rotation = initial_rotation,
-            wiggle_offset = love.math.random() * 2 * math.pi -- random sine phase
+            wiggle_offset = i * 0.04 * math.pi -- random sine phase
         })
     end
 end
@@ -69,7 +72,8 @@ function love.update(dt)
     -- Rotate all rings
     for i, ring in ipairs(rings) do
         -- Apply a sine wave offset to add wiggle to the rotation
-        ring.rotation = ring.rotation + ROTATION_SPEED * dt + math.sin(love.timer.getTime() + ring.wiggle_offset) * 0.01
+        local sine_effect = math.sin(love.timer.getTime() * 0.5 + ring.wiggle_offset) * 0.005
+        ring.rotation = ring.rotation + ROTATION_SPEED * dt + sine_effect
 
         -- Check if ball enters the gap of this ring
         local dx = ball.x - CENTER_X
@@ -81,7 +85,7 @@ function love.update(dt)
         -- If the ball is inside the gap of the current ring, destroy it
         if dist >= (ring.radius - BALL_RADIUS) and dist <= ring.radius and isInGap(angle, ring) then
             destroyRing(i)
-            break -- Exit loop since the ring is destroyed
+            --break -- Exit loop since the ring is destroyed
         end
     end
 
@@ -135,7 +139,7 @@ if BOUNCE_RANDOMNESS > 0 then
     ball.vx, ball.vy = new_vx, new_vy
 
     -- Random energy gain/loss (scale from 1 to 1 + BOUNCE_RANDOMNESS)
-    local energy_factor = 1 + (love.math.random() * BOUNCE_RANDOMNESS)
+    local energy_factor = 1 + (love.math.random() * BOUNCE_RANDOMNESS * 0.1)
     ball.vx = ball.vx * energy_factor
     ball.vy = ball.vy * energy_factor
 end
@@ -157,7 +161,7 @@ end
 function love.draw()
     -- Draw remaining rotating rings with gaps
     love.graphics.setColor(0.3, 0.3, 0.3)
-    local segments = 60
+    local segments = 250
     for _, ring in ipairs(rings) do
         local angle_step = 2 * math.pi / segments
         for i = 0, segments - 1 do
