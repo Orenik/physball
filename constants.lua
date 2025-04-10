@@ -4,7 +4,7 @@ return {
     CENTER_X = 400,
     CENTER_Y = 300,
     BALL_RADIUS = 10,
-
+	
     N_RINGS = 50,
     RING_SPACING = 5,
     RING_THICKNESS = 2,
@@ -12,5 +12,7 @@ return {
     GAP_ARC = math.rad(45),
     ROTATION_SPEED = math.rad(1),
 
-    BOUNCE_RANDOMNESS = 0.05
+    BOUNCE_RANDOMNESS = 0.05,
+    NUM_RING_SEGMENTS = 200,
+    RING_EXPLODE_DENSITY = 10,
 }

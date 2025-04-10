@@ -46,8 +46,18 @@ function ParticleManager:emit(x, y)
     ps:setLinearAcceleration(-50, -50, 50, 50)
     ps:setSizes(0.5, 0.1)
     ps:setSpread(math.pi * 2)
-    --ps:setColors(1, 0.2, 0.2, 1, 1, 0.2, 0.2, 0)
-    ps:setColors(1, 1, 1, 1, 1, 1, 1, 0)
+    
+    ps:setColors(
+    1, 0, 0, 1,   -- red
+    1, 0.5, 0, 1, -- orange
+    1, 1, 0, 1,   -- yellow
+    0, 1, 0, 1,   -- green
+    0, 1, 1, 1,   -- cyan
+    0, 0, 1, 1,   -- blue
+    0.6, 0, 1, 1, -- violet
+    1, 1, 1, 0    -- fade to transparent white
+    )
+
     ps:emit(30)
 
     table.insert(self.emitters, {
