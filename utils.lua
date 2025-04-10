@@ -1,18 +1,11 @@
 local constants = require("constants")
 
-local function isInGap(angle, ring)
-    local start_angle = ring.rotation
-    local end_angle = ring.rotation + constants.GAP_ARC
+local function isInGap(world_angle, ring)
+    -- Undo the ring's rotation to bring world angle to ring-local angle
+    local local_angle = (world_angle - ring.rotation) % (2 * math.pi)
 
-    angle = angle % (2 * math.pi)
-    start_angle = start_angle % (2 * math.pi)
-    end_angle = end_angle % (2 * math.pi)
-
-    if start_angle < end_angle then
-        return angle >= start_angle and angle <= end_angle
-    else
-        return angle >= start_angle or angle <= end_angle
-    end
+    -- The gap always starts at 0 and ends at GAP_ARC in local space
+    return local_angle >= 0 and local_angle <= constants.GAP_ARC
 end
 
 return {

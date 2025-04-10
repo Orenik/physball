@@ -37,14 +37,14 @@ function Ring:draw()
     local angle_step = 2 * math.pi / segments
 
     for i = 0, segments - 1 do
-        local a1 = i * angle_step
-        local a2 = (i + 1) * angle_step
+        local world_angle1 = i * angle_step
+        local world_angle2 = (i + 1) * angle_step
 
-        if not (utils.isInGap(a1, self) and utils.isInGap(a2, self)) then
-            local x1 = constants.CENTER_X + math.cos(a1 + self.rotation) * self.radius
-            local y1 = constants.CENTER_Y + math.sin(a1 + self.rotation) * self.radius
-            local x2 = constants.CENTER_X + math.cos(a2 + self.rotation) * self.radius
-            local y2 = constants.CENTER_Y + math.sin(a2 + self.rotation) * self.radius
+        if not (utils.isInGap(world_angle1, self) and utils.isInGap(world_angle2, self)) then
+            local x1 = constants.CENTER_X + math.cos(world_angle1) * self.radius
+            local y1 = constants.CENTER_Y + math.sin(world_angle1) * self.radius
+            local x2 = constants.CENTER_X + math.cos(world_angle2) * self.radius
+            local y2 = constants.CENTER_Y + math.sin(world_angle2) * self.radius
             love.graphics.line(x1, y1, x2, y2)
         end
     end
